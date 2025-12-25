@@ -1,0 +1,3 @@
+create react app with typescript with vite bundler
+1. npm create vite@latest
+2. choose react oprion, typescript, no roll down option to create basic react app
