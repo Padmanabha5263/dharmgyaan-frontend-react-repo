@@ -1,3 +1,16 @@
 create react app with typescript with vite bundler
-1. npm create vite@latest
+1. execute npm create vite@latest  command to create react project
 2. choose react oprion, typescript, no roll down option to create basic react app
+tools: typescript: firebase sdk
+
+Authentication and User management tool
+tool: supertokens or firebase Authentication
+
+
+connect firebase with react application
+create react application 
+ 
+
+
+Reference links
+1. create React app: https://vite.dev/guide/
