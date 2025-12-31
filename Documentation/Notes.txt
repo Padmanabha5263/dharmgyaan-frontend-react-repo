@@ -5,12 +5,17 @@ tools: typescript: firebase sdk
 
 Authentication and User management tool
 tool: supertokens or firebase Authentication
+social signin: google and facebook
 
+frontend tools and libraries
+1. React
+2. Firebase sdk
+3. Mui css framework
+4. styled components
 
-connect firebase with react application
-create react application 
- 
 
 
 Reference links
 1. create React app: https://vite.dev/guide/
+2. social sigin : https://firebase.google.com/docs/auth?authuser=1
+
