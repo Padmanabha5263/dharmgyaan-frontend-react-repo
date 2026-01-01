@@ -1,22 +1,23 @@
 import { useState } from 'react'
-import { GoogleAuthProvider, signInWithPopup, signOut  } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup, signOut, type User  } from 'firebase/auth'
 import { auth } from '../config/firebase';
 import styled from 'styled-components';
 
 
 function SignInPage() {
-  const [userInfo, setUserInfo] = useState(null)
+  const [userInfo, setUserInfo] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(false);
 
   // function to signin the user with google social login
-  const siginWithGoogle= async()=>{
+  const signInWithGoogle = async()=>{
     setIsLoading(true);
      try {
-    const provider = new GoogleAuthProvider();
-    const result:any = await signInWithPopup(auth, provider);
-    setUserInfo(result);
-    setIsLoading(false)
-  }
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
+        setUserInfo(result.user);
+        setIsLoading(false)
+      }
+
   catch (error: any) { // Use 'any' for error type or more specific FirebaseError
     if (error.code === 'auth/cancelled-popup-request') {
       console.warn("Google sign-in popup was cancelled or blocked by the browser.");
@@ -55,7 +56,6 @@ function SignInPage() {
   //     console.log("error",error)
   //   }
   // }
-  console.log("userinfo", userInfo)
 
   // rendering the ui
   return (
@@ -63,7 +63,7 @@ function SignInPage() {
         <Card>
             <Title>Welcome to DharmGyaan</Title>
         <Subtitle>Sign in to continue</Subtitle>
-         <GoogleButton onClick={siginWithGoogle} disabled={isLoading}>
+         <GoogleButton onClick={signInWithGoogle} disabled={isLoading}>
           <GoogleIcon viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -72,10 +72,15 @@ function SignInPage() {
           </GoogleIcon>
           {isLoading ? 'Signing in...' : 'Continue with Google'}
         </GoogleButton>
-          {isLoading ? 'Signing in...' : 'Continue with Google'}
-        {userInfo && <GoogleButton onClick={googleAuthSignout}>
+          
+        {userInfo && (
+          <div>
+            <Subtitle>Logged in User <br/><strong>{userInfo.user.email}</strong></Subtitle>
+          <GoogleButton onClick={googleAuthSignout}>
           Signout
-        </GoogleButton>}
+        </GoogleButton>
+          </div>
+        )}
       </Card>
     </Container>
   )
