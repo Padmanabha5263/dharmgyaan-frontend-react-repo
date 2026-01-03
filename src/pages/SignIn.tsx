@@ -48,7 +48,7 @@ export default function SignIn() {
       throw error; // Re-throw the error if you want calling code to handle it
     }
   };
-
+   console.log("sigin info", userInfo)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     navigate("/quiz");
