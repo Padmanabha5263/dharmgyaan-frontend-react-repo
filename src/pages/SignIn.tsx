@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import {
   Box,
   Container,
@@ -10,29 +10,58 @@ import {
   Link,
   Avatar,
   IconButton,
-} from '@mui/material';
-import { Login, Brightness4, Brightness7 } from '@mui/icons-material';
-import { useThemeContext } from '../ThemeContext';
+} from "@mui/material";
+import { Login, Brightness4, Brightness7 } from "@mui/icons-material";
+import { useThemeContext } from "../ThemeContext";
+import { auth } from "../utils/firebaseConfig";
+import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 
 export default function SignIn() {
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme } = useThemeContext();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [userInfo, setUserInfo] = useState<User | null>(null);
+
+  const signInWithGoogle = async () => {
+    setIsLoading(true);
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      setUserInfo(result.user);
+      setIsLoading(false);
+    } catch (error: any) {
+      // Use 'any' for error type or more specific FirebaseError
+      if (error.code === "auth/cancelled-popup-request") {
+        console.warn(
+          "Google sign-in popup was cancelled or blocked by the browser."
+        );
+        // Optionally, inform the user or try an alternative method like signInWithRedirect
+      } else if (error.code === "auth/popup-blocked") {
+        console.warn(
+          "Google sign-in popup was blocked by the browser. Please allow popups for this site."
+        );
+      } else {
+        console.error("Error with Google sign-in:", error.message);
+      }
+      throw error; // Re-throw the error if you want calling code to handle it
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/quiz');
+    navigate("/quiz");
   };
 
   return (
     <Box
       sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        bgcolor: 'background.default',
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "background.default",
         px: 2,
       }}
     >
@@ -44,22 +73,27 @@ export default function SignIn() {
             borderRadius: 2,
           }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
             <IconButton onClick={toggleTheme} color="inherit">
               {isDarkMode ? <Brightness7 /> : <Brightness4 />}
             </IconButton>
           </Box>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-            <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56 }}>
-              <Login sx={{ color: 'primary.contrastText' }} />
+          <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+            <Avatar sx={{ bgcolor: "primary.main", width: 56, height: 56 }}>
+              <Login sx={{ color: "primary.contrastText" }} />
             </Avatar>
           </Box>
 
           <Typography variant="h4" align="center" gutterBottom>
             Welcome Back
           </Typography>
-          <Typography variant="body1" align="center" color="text.secondary" sx={{ mb: 4 }}>
+          <Typography
+            variant="body1"
+            align="center"
+            color="text.secondary"
+            sx={{ mb: 4 }}
+          >
             Sign in to continue your exam
           </Typography>
 
@@ -94,20 +128,45 @@ export default function SignIn() {
               size="large"
               sx={{
                 py: 1.5,
-                bgcolor: 'secondary.main',
-                color: 'secondary.contrastText',
-                '&:hover': {
-                  bgcolor: 'secondary.dark',
+                bgcolor: "secondary.main",
+                color: "secondary.contrastText",
+                "&:hover": {
+                  bgcolor: "secondary.dark",
                 },
               }}
             >
               Sign In
             </Button>
           </form>
+          <br />
+          {/* google social login start */}
+          <Button
+            type="submit"
+            fullWidth
+            onClick={signInWithGoogle}
+            variant="contained"
+            size="large"
+            sx={{
+              py: 1.5,
+              bgcolor: "secondary.main",
+              color: "secondary.contrastText",
+              "&:hover": {
+                bgcolor: "secondary.dark",
+              },
+            }}
+          >
+            <img
+              src="https://developers.google.com/identity/images/g-logo.png"
+              alt="Google logo"
+              style={{ width: 18, height: 18, marginRight: 10 }}
+            />
+            <span>Sign in with Google</span>
+          </Button>
+          {/* google social login end */}
 
-          <Box sx={{ mt: 3, textAlign: 'center' }}>
+          <Box sx={{ mt: 3, textAlign: "center" }}>
             <Typography variant="body2" color="text.secondary">
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <Link
                 component={RouterLink}
                 to="/signup"
