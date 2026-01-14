@@ -4,6 +4,8 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Quiz from './pages/Quiz';
 import Results from './pages/Results';
+import ReligionSelect from './pages/ReligionSelect';
+// import QuizCustomization from './pages/QuizCustomization';
 
 export default function App() {
   return (
@@ -15,6 +17,8 @@ export default function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/results" element={<Results />} />
+           <Route path="/select-religion" element={<ReligionSelect />} />
+        {/* <Route path="/customize-quiz" element={<QuizCustomization />} /> */}
         </Routes>
       </Router>
     </ThemeProvider>
