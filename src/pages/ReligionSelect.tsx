@@ -47,7 +47,7 @@ export default function ReligionSelect() {
                     {religion.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {"hellow word"}
+                    {religion.description}
                   </Typography>
                 </CardContent>
               </CardActionArea>
