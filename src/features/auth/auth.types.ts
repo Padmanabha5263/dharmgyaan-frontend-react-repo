@@ -5,5 +5,8 @@ export interface AuthUser {
     email: string;
     name: string;
     photo?: string;
-    role: Role
+    accessToken: string;
+    refreshToken: string;
+    providerId:string;
+    phoneNumber:string|null;
 }

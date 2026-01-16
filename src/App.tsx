@@ -4,10 +4,13 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Quiz from './pages/Quiz';
 import Results from './pages/Results';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 export default function App() {
   return (
-    <ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/signin" replace />} />
@@ -18,5 +21,6 @@ export default function App() {
         </Routes>
       </Router>
     </ThemeProvider>
+    </Provider>
   );
 }
