@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { Religion } from "../types";
 import { Box, Card, CardActionArea, CardContent, Container, Typography } from "@mui/material";
 import { useFetchData } from "../hooks/useFetch";
 
 export default function ReligionSelect() {
   const navigate = useNavigate();
   const {data, loading, error} = useFetchData("religion");
-  const handleSelect = (religion: Religion) => {
+  const handleSelect = (religion: string) => {
     navigate("/customize-quiz", { state: { religion } });
   };
 
