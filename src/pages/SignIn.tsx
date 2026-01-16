@@ -13,42 +13,42 @@ import {
 } from "@mui/material";
 import { Login, Brightness4, Brightness7 } from "@mui/icons-material";
 import { useThemeContext } from "../ThemeContext";
-import { auth } from "../utils/firebaseConfig";
-import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+import { useGoogleAuth } from "../features/auth";
 
 export default function SignIn() {
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme } = useThemeContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState<Boolean>(false);
-  const [userInfo, setUserInfo] = useState<User | null>(null);
 
-  const signInWithGoogle = async () => {
-    setIsLoading(true);
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      setUserInfo(result.user);
-      setIsLoading(false);
-    } catch (error: any) {
-      // Use 'any' for error type or more specific FirebaseError
-      if (error.code === "auth/cancelled-popup-request") {
-        console.warn(
-          "Google sign-in popup was cancelled or blocked by the browser."
-        );
-        // Optionally, inform the user or try an alternative method like signInWithRedirect
-      } else if (error.code === "auth/popup-blocked") {
-        console.warn(
-          "Google sign-in popup was blocked by the browser. Please allow popups for this site."
-        );
-      } else {
-        console.error("Error with Google sign-in:", error.message);
-      }
-      throw error; // Re-throw the error if you want calling code to handle it
-    }
-  };
-   console.log("sigin info", userInfo)
+
+  const googleAuth = useGoogleAuth();
+
+  // const signInWithGoogle = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     // const provider = new GoogleAuthProvider();
+  //     // const result = await signInWithPopup(auth, provider);
+  //     // setUserInfo(result.user);
+  //     setIsLoading(false);
+  //   } catch (error: any) {
+  //     // Use 'any' for error type or more specific FirebaseError
+  //     if (error.code === "auth/cancelled-popup-request") {
+  //       console.warn(
+  //         "Google sign-in popup was cancelled or blocked by the browser."
+  //       );
+  //       // Optionally, inform the user or try an alternative method like signInWithRedirect
+  //     } else if (error.code === "auth/popup-blocked") {
+  //       console.warn(
+  //         "Google sign-in popup was blocked by the browser. Please allow popups for this site."
+  //       );
+  //     } else {
+  //       console.error("Error with Google sign-in:", error.message);
+  //     }
+  //     throw error; // Re-throw the error if you want calling code to handle it
+  //   }
+  // };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     navigate("/quiz");
@@ -143,7 +143,7 @@ export default function SignIn() {
           <Button
             type="submit"
             fullWidth
-            onClick={signInWithGoogle}
+            onClick={googleAuth.login}
             variant="contained"
             size="large"
             sx={{

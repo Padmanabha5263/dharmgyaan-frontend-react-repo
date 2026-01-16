@@ -21,8 +21,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./tooltip";
-import { useIsMobile } from "../shared/hooks/useIsMobile";
 import { cn } from "../utils/helper";
+import { useIsMobile } from "../utils/hooks/useIsMobile";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
