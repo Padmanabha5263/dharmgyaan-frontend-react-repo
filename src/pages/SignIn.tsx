@@ -20,34 +20,7 @@ export default function SignIn() {
   const { isDarkMode, toggleTheme } = useThemeContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-
   const googleAuth = useGoogleAuth();
-
-  // const signInWithGoogle = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     // const provider = new GoogleAuthProvider();
-  //     // const result = await signInWithPopup(auth, provider);
-  //     // setUserInfo(result.user);
-  //     setIsLoading(false);
-  //   } catch (error: any) {
-  //     // Use 'any' for error type or more specific FirebaseError
-  //     if (error.code === "auth/cancelled-popup-request") {
-  //       console.warn(
-  //         "Google sign-in popup was cancelled or blocked by the browser."
-  //       );
-  //       // Optionally, inform the user or try an alternative method like signInWithRedirect
-  //     } else if (error.code === "auth/popup-blocked") {
-  //       console.warn(
-  //         "Google sign-in popup was blocked by the browser. Please allow popups for this site."
-  //       );
-  //     } else {
-  //       console.error("Error with Google sign-in:", error.message);
-  //     }
-  //     throw error; // Re-throw the error if you want calling code to handle it
-  //   }
-  // };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
