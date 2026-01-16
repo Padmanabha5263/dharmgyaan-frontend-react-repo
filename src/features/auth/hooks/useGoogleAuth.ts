@@ -25,8 +25,8 @@ export const useGoogleAuth = () => {
                 phoneNumber: userInfo.phoneNumber,
                 accessToken: userInfo.accessToken,
                 refreshToken: userInfo.refreshToken,
-                providerId: userInfo.providerId
-
+                providerId: userInfo.providerId,
+                isAuthenticated:true,
             });
         } catch (err) {
             const details = errorPrint(err, 'useGoogleAuth');

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import {
   Box,
@@ -14,6 +14,7 @@ import {
 import { Login, Brightness4, Brightness7 } from "@mui/icons-material";
 import { useThemeContext } from "../ThemeContext";
 import { useGoogleAuth } from "../features/auth";
+import { useAutoLogin } from "../features/auth/hooks/useAutoLogin";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const googleAuth = useGoogleAuth();
+  useAutoLogin(()=>navigate("/quiz"));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -9,7 +9,8 @@ const initialState: AuthUser = {
     accessToken: '',
     refreshToken: '',
     providerId: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    isAuthenticated: false,
 }
 
 export const authSlice = createSlice({
@@ -21,6 +22,10 @@ export const authSlice = createSlice({
             state.name = action.payload.name;
             state.photo = action.payload.photo;
             state.uid = action.payload.uid;
+            state.phoneNumber = action.payload.phoneNumber;
+            state.accessToken = action.payload.accessToken;
+            state.refreshToken = action.payload.refreshToken;
+            state.isAuthenticated = action.payload.isAuthenticated;
         },
     },
 })
