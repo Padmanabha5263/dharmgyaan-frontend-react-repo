@@ -1,7 +1,7 @@
 // hooks that will get the data from the firebase store 
 import { useEffect, useState } from 'react';
 import { collection, onSnapshot, DocumentData } from 'firebase/firestore';
-import { db } from '../utils/firebaseConfig';
+import { db } from '../firebaseConfig';
 
 /* Custom hook to fetch data from a Firestore collection 
    it takes actual firestore collection name as argument 

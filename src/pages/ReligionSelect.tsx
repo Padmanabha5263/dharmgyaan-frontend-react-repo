@@ -1,23 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Card, CardActionArea, CardContent, Container, Typography } from "@mui/material";
-import { useFetchData } from "../hooks/useFetch";
+import { Religion, useReligion } from "../features/religion";
 
 export default function ReligionSelect() {
   const navigate = useNavigate();
-  const {data, loading, error} = useFetchData("religion");
-  const handleSelect = (religion: string) => {
-    navigate("/customize-quiz", { state: { religion } });
+  const religion = useReligion({ initialLoad: true });
+
+  const handleSelect = (religion: Religion) => {
+    navigate("/customize-quiz", { state: religion });
   };
 
   return (
-   <Box
+    <Box
       sx={{
         minHeight: '200px',
-        display:'grid',
+        display: 'grid',
         bgcolor: 'background.default',
         py: 2,
         px: 2,
-        gap:2,
+        gap: 2,
         width: { xs: '100%', sm: 400, md: 600 },
         mx: 'auto'
       }}
@@ -25,11 +26,11 @@ export default function ReligionSelect() {
       <h1>Choose Your Spiritual Path</h1>
       <p>This helps us personalize your quiz experience.</p>
       {
-        data && data.map((religion, index) => {
+        religion.data.length && religion.data.map((religion, index) => {
           return (
-            <Card key={religion.id}>
+            <Card key={religion.religion_id}>
               <CardActionArea
-                onClick={() => handleSelect(religion.name)}
+                onClick={() => handleSelect(religion)}
                 data-active={true}
                 sx={{
                   height: '100%',
@@ -41,7 +42,7 @@ export default function ReligionSelect() {
                   },
                 }}
               >
-              <CardContent sx={{ height: '100%' }}>
+                <CardContent sx={{ height: '100%' }}>
                   <Typography variant="h5" component="div">
                     {religion.name}
                   </Typography>
