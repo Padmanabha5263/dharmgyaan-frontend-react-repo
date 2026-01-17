@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -15,74 +15,62 @@ import {
 } from '@mui/material';
 import { ChevronRight, AccessTime, Brightness4, Brightness7 } from '@mui/icons-material';
 import { useThemeContext } from '../ThemeContext';
-
-interface Question {
-  id: number;
-  question: string;
-  options: string[];
-}
-
-const questions: Question[] = [
-  {
-    id: 1,
-    question: 'What is the capital of France?',
-    options: ['London', 'Berlin', 'Paris', 'Madrid'],
-  },
-  {
-    id: 2,
-    question: 'Which planet is known as the Red Planet?',
-    options: ['Venus', 'Mars', 'Jupiter', 'Saturn'],
-  },
-  {
-    id: 3,
-    question: 'What is 2 + 2?',
-    options: ['3', '4', '5', '6'],
-  },
-  {
-    id: 4,
-    question: 'Who painted the Mona Lisa?',
-    options: ['Van Gogh', 'Picasso', 'Da Vinci', 'Rembrandt'],
-  },
-  {
-    id: 5,
-    question: 'What is the largest ocean on Earth?',
-    options: ['Atlantic', 'Indian', 'Arctic', 'Pacific'],
-  },
-];
+import { useQuestions } from '../features/questions/question.hook';
 
 export default function Quiz() {
   const navigate = useNavigate();
+  const questions = useQuestions();
+
   const { isDarkMode, toggleTheme } = useThemeContext();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({});
   const [selectedOption, setSelectedOption] = useState<string>('');
 
+
+
+  //fetch questions.................
+  useEffect(() => {
+    (async () => {
+      await questions.loadData({
+        religion_id: '0gsLHqAZBc1dQgbToesy',
+        sacred_id: '3JHcoCBx3epx61PXFOzB',
+        level: 2,
+        limit: 10
+      });
+
+    })()
+  }, [questions.loadData])
+
+
+  //-----print questions-------------
+  console.log("questions",questions.data)
+
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (selectedOption) {
       setSelectedAnswers({
         ...selectedAnswers,
         [currentQuestion]: selectedOption,
       });
 
-      if (currentQuestion < questions.length - 1) {
+      if (currentQuestion < questions.data.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
         setSelectedOption(selectedAnswers[currentQuestion + 1] || '');
       } else {
         navigate('/results', {
           state: {
             answers: { ...selectedAnswers, [currentQuestion]: selectedOption },
-            totalQuestions: questions.length,
+            totalQuestions: questions.data.length,
           },
         });
       }
     }
   };
 
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
+  const progress = ((currentQuestion + 1) / questions.data.length) * 100;
 
   return (
     <Box
@@ -106,7 +94,7 @@ export default function Quiz() {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <AccessTime color="success" />
               <Typography color="text.primary">
-                Question {currentQuestion + 1} of {questions.length}
+                Question {currentQuestion + 1} of {questions.data.length}
               </Typography>
             </Box>
             <Typography color="success.main" fontWeight="600">
@@ -131,12 +119,12 @@ export default function Quiz() {
         {/* Question Card */}
         <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
           <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
-            {questions[currentQuestion].question}
+            {questions.data[currentQuestion].question}
           </Typography>
 
           <FormControl component="fieldset" fullWidth sx={{ mb: 4 }}>
             <RadioGroup value={selectedOption} onChange={handleOptionChange}>
-              {questions[currentQuestion].options.map((option, index) => (
+              {questions.data[currentQuestion].options.map((option, index) => (
                 <Paper
                   key={index}
                   elevation={selectedOption === option ? 2 : 0}

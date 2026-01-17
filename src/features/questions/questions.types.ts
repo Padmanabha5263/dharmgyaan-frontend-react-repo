@@ -16,3 +16,10 @@ export interface Questions {
     religion_id: string
     sacred_id: string
 }
+
+export interface GetQuestionParams {
+    religion_id: string,
+    sacred_id: string,
+    level: number,
+    limit: number,
+}

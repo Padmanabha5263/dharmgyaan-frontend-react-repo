@@ -1,13 +1,8 @@
 import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
 import { db } from "../../utils/firebaseConfig";
-import { Questions } from "./questions.types";
+import { GetQuestionParams, Questions } from "./questions.types";
 
-interface GetQuestionParams {
-    religion_id: string,
-    sacred_id: string,
-    level: number,
-    limit: number,
-}
+
 
 export const getQuestions = async (params: GetQuestionParams) => {
     const random = Math.random();
@@ -17,8 +12,8 @@ export const getQuestions = async (params: GetQuestionParams) => {
         where("religion_id", "==", params.religion_id),
         where("sacred_id", '==', params.sacred_id),
         where("level", '==', params.level),
-        where("randomKey", ">=", random),
-        orderBy("randomKey"),
+        where("random", ">=", random),
+        orderBy("random"),
         limit(params.limit)
 
     );
@@ -34,13 +29,13 @@ export const getQuestions = async (params: GetQuestionParams) => {
             where("religion_id", "==", params.religion_id),
             where("sacred_id", '==', params.sacred_id),
             where("level", '==', params.level),
-            where("randomKey", "<", random),
-            orderBy("randomKey"),
+            where("random", "<", random),
+            orderBy("random"),
             limit(params.limit - required_doc.length)
         );
         const new_snap = await getDocs(q2);
         const new_doc = new_snap.docs.map(d => ({ ...d.data() }));
-        required_doc = [...required_doc, new_doc]
+        required_doc = [...required_doc, ...new_doc]
     }
     return required_doc as Questions[]
 }
