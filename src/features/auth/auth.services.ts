@@ -9,8 +9,7 @@ interface GoogleUserInfo extends User {
 
 export const googleAuthProvider = async () => {
     const provider = new GoogleAuthProvider();
-    const response = await googleSigninPopup(auth, provider);
+    const response = await signInWithPopup(auth, provider);
     return response.user as GoogleUserInfo;
 
 };
-export const googleSigninPopup = signInWithPopup;
