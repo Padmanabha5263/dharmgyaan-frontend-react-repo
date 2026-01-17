@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Card, CardActionArea, CardContent, Container, Typography } from "@mui/material";
-import { Religion, useReligion } from "../features/religion";
+import { Religion, useReligion } from "../utils/features/religion.ts";
 
 export default function ReligionSelect() {
   const navigate = useNavigate();
