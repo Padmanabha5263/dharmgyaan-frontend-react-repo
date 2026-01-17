@@ -9,7 +9,6 @@ interface UseReligionParams {
 }
 
 export const useReligion = (params: UseReligionParams) => {
-
     const { initialLoad } = params;
     const loader = useLoader();
     const [data, setData] = useState<Religion[]>([]);
@@ -20,12 +19,9 @@ export const useReligion = (params: UseReligionParams) => {
             const res = await getReligions();
             setData(res)
         } catch (err) {
-
         } finally {
             loader.turnOff()
         }
-
-
     }, [])
 
     useEffect(() => {
@@ -40,6 +36,4 @@ export const useReligion = (params: UseReligionParams) => {
         loader,
         loadData
     }
-
-
 }

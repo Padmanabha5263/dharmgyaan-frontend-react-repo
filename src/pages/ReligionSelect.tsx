@@ -7,7 +7,7 @@ export default function ReligionSelect() {
   const religion = useReligion({ initialLoad: true });
 
   const handleSelect = (religion: Religion) => {
-    navigate("/customize-quiz", { state: religion });
+    navigate("/quiz", { state: religion });
   };
 
   return (
