@@ -1,4 +1,4 @@
-export enum LoginType {
+export enum Provider {
     GOOGLE = 'google',
     FACEBOOK = 'facebook',
     EMAIL = 'email'

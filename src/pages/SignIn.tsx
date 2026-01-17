@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import {
   Box,
@@ -13,21 +13,26 @@ import {
 } from "@mui/material";
 import { Login, Brightness4, Brightness7 } from "@mui/icons-material";
 import { useThemeContext } from "../ThemeContext";
-import { useGoogleAuth } from "../features/auth";
-import { useAutoLogin } from "../features/auth/hooks/useAutoLogin";
+import { Provider, useAuth } from "../features/auth";
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const auth = useAuth();
+
   const { isDarkMode, toggleTheme } = useThemeContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const googleAuth = useGoogleAuth();
-  useAutoLogin(()=>navigate("/quiz"));
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     navigate("/quiz");
   };
+
+  const onGoogleSignInClick = async () => {
+    await auth.login(Provider.GOOGLE);
+    navigate("/quiz");
+  }
 
   return (
     <Box
@@ -118,7 +123,7 @@ export default function SignIn() {
           <Button
             type="submit"
             fullWidth
-            onClick={googleAuth.login}
+            onClick={onGoogleSignInClick}
             variant="contained"
             size="large"
             sx={{
