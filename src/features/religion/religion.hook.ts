@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLoader } from "../../utils/hooks/useLoader";
-import { getReligions } from "./religion.services";
 import { Religion } from "./religion.type";
+import { getReligions } from "./religion.services";
 
 
 interface UseReligionParams {

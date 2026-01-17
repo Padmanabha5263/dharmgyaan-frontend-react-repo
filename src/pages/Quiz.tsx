@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 import { ChevronRight, AccessTime, Brightness4, Brightness7 } from '@mui/icons-material';
 import { useThemeContext } from '../ThemeContext';
-import { getReligions } from '../features/questions/questions.services';
 
 interface Question {
   id: number;
@@ -57,8 +56,6 @@ export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({});
   const [selectedOption, setSelectedOption] = useState<string>('');
-
-    getReligions();
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
