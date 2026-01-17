@@ -11,6 +11,7 @@ export const useQuestions = () => {
         try {
             loader.turnOn();
             const questions = await getQuestions(params);
+            console.log("my questions",questions)
             setData(questions);
         } catch (err) {
         } finally {

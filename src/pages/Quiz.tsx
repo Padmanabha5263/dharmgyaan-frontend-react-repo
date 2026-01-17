@@ -38,12 +38,10 @@ export default function Quiz() {
         limit: 10
       });
 
+
     })()
   }, [questions.loadData])
 
-
-  //-----print questions-------------
-  console.log("questions",questions.data)
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
@@ -56,21 +54,66 @@ export default function Quiz() {
         [currentQuestion]: selectedOption,
       });
 
-      if (currentQuestion < questions.data.length - 1) {
+      if (currentQuestion < questions?.data.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
         setSelectedOption(selectedAnswers[currentQuestion + 1] || '');
       } else {
         navigate('/results', {
           state: {
             answers: { ...selectedAnswers, [currentQuestion]: selectedOption },
-            totalQuestions: questions.data.length,
+            totalQuestions: questions?.data.length,
           },
         });
       }
     }
   };
 
+
+
   const progress = ((currentQuestion + 1) / questions.data.length) * 100;
+
+  const renderOptions = () => {
+    return (
+      <FormControl component="fieldset" fullWidth sx={{ mb: 4 }}>
+        <RadioGroup value={selectedOption} onChange={handleOptionChange}>
+          {[questions?.data?.[currentQuestion]?.optA, questions?.data?.[currentQuestion]?.optB, questions?.data?.[currentQuestion]?.optC, questions?.data?.[currentQuestion]?.optD].map((option, index) => (
+            <Paper
+              key={index}
+              elevation={selectedOption === option ? 2 : 0}
+              sx={{
+                mb: 2,
+                p: 2,
+                border: 2,
+                borderColor: selectedOption === option ? 'success.main' : 'divider',
+                bgcolor: selectedOption === option ? 'action.hover' : 'transparent',
+                transition: 'all 0.2s',
+                '&:hover': {
+                  borderColor: 'success.main',
+                  bgcolor: 'action.hover',
+                },
+              }}
+            >
+              <FormControlLabel
+                value={option}
+                control={
+                  <Radio
+                    sx={{
+                      color: 'text.secondary',
+                      '&.Mui-checked': {
+                        color: 'success.main',
+                      },
+                    }}
+                  />
+                }
+                label={option}
+                sx={{ width: '100%', m: 0 }}
+              />
+            </Paper>
+          ))}
+        </RadioGroup>
+      </FormControl>
+    )
+  }
 
   return (
     <Box
@@ -94,7 +137,7 @@ export default function Quiz() {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <AccessTime color="success" />
               <Typography color="text.primary">
-                Question {currentQuestion + 1} of {questions.data.length}
+                Question {currentQuestion + 1} of {questions?.data.length}
               </Typography>
             </Box>
             <Typography color="success.main" fontWeight="600">
@@ -119,47 +162,12 @@ export default function Quiz() {
         {/* Question Card */}
         <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
           <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
-            {questions.data[currentQuestion].question}
+            {questions?.data?.[currentQuestion]?.question}
           </Typography>
 
-          <FormControl component="fieldset" fullWidth sx={{ mb: 4 }}>
-            <RadioGroup value={selectedOption} onChange={handleOptionChange}>
-              {questions.data[currentQuestion].options.map((option, index) => (
-                <Paper
-                  key={index}
-                  elevation={selectedOption === option ? 2 : 0}
-                  sx={{
-                    mb: 2,
-                    p: 2,
-                    border: 2,
-                    borderColor: selectedOption === option ? 'success.main' : 'divider',
-                    bgcolor: selectedOption === option ? 'action.hover' : 'transparent',
-                    transition: 'all 0.2s',
-                    '&:hover': {
-                      borderColor: 'success.main',
-                      bgcolor: 'action.hover',
-                    },
-                  }}
-                >
-                  <FormControlLabel
-                    value={option}
-                    control={
-                      <Radio
-                        sx={{
-                          color: 'text.secondary',
-                          '&.Mui-checked': {
-                            color: 'success.main',
-                          },
-                        }}
-                      />
-                    }
-                    label={option}
-                    sx={{ width: '100%', m: 0 }}
-                  />
-                </Paper>
-              ))}
-            </RadioGroup>
-          </FormControl>
+
+          {renderOptions()}
+
 
           <Button
             fullWidth
@@ -181,7 +189,7 @@ export default function Quiz() {
               },
             }}
           >
-            {currentQuestion < questions.length - 1 ? 'Next Question' : 'Submit Exam'}
+            {currentQuestion < questions?.data.length - 1 ? 'Next Question' : 'Submit Exam'}
           </Button>
         </Paper>
       </Container>
