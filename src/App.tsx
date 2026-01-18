@@ -13,18 +13,18 @@ export default function App() {
   return (
     <Provider store={store}>
       <ThemeProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/signin" replace />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/results" element={<Results />} />
-           <Route path="/select-religion" element={<ReligionSelect />} />
-        {/* <Route path="/customize-quiz" element={<QuizCustomization />} /> */}
-        </Routes>
-      </Router>
-    </ThemeProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Navigate to="/signin" replace />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/quiz" element={<Quiz />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/select-religion" element={<ReligionSelect />} />
+            {/* <Route path="/customize-quiz" element={<QuizCustomization />} /> */}
+          </Routes>
+        </Router>
+      </ThemeProvider>
     </Provider>
   );
 }
