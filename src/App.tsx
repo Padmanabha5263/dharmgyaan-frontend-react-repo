@@ -20,8 +20,8 @@ export default function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/results" element={<Results />} />
-           <Route path="/religion" element={<ReligionSelect />} />
-        <Route path="/customize-quiz" element={<QuizCustomization />} />
+          <Route path="/religion" element={<ReligionSelect />} />
+          <Route path="/quiz/customize" element={<QuizCustomization />} />
         </Routes>
       </Router>
     </ThemeProvider>
