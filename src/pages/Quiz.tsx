@@ -1,51 +1,41 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
-  Container,
-  Paper,
   Typography,
   Button,
   Radio,
   RadioGroup,
   FormControlLabel,
   FormControl,
-  LinearProgress,
-  IconButton,
-} from '@mui/material';
-import { ChevronRight, AccessTime, Brightness4, Brightness7 } from '@mui/icons-material';
-import { useThemeContext } from '../ThemeContext';
-import { useQuestions } from '../features/questions/question.hook';
+  Paper,
+} from "@mui/material";
+import { ChevronRight, AccessTime } from "@mui/icons-material";
+import { useThemeContext } from "../ThemeContext";
+import { useQuestions } from "../features/questions/question.hook";
+import TalkBox from "../components/Talkbox";
 
 export default function Quiz() {
   const navigate = useNavigate();
   const questions = useQuestions();
 
-  const { isDarkMode, toggleTheme } = useThemeContext();
+  const { isDarkMode } = useThemeContext();
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({});
-  const [selectedOption, setSelectedOption] = useState<string>('');
+  const [selectedAnswers, setSelectedAnswers] = useState<{
+    [key: number]: string;
+  }>({});
+  const [selectedOption, setSelectedOption] = useState<string>("");
 
-
-
-  //fetch questions.................
   useEffect(() => {
     (async () => {
       await questions.loadData({
-        religion_id: '0gsLHqAZBc1dQgbToesy',
-        sacred_id: '3JHcoCBx3epx61PXFOzB',
+        religion_id: "0gsLHqAZBc1dQgbToesy",
+        sacred_id: "3JHcoCBx3epx61PXFOzB",
         level: 2,
-        limit: 10
+        limit: 10,
       });
-
-
-    })()
-  }, [questions.loadData])
-
-
-  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.target.value);
-  };
+    })();
+  }, [questions.loadData]);
 
   const handleNext = async () => {
     if (selectedOption) {
@@ -54,145 +44,150 @@ export default function Quiz() {
         [currentQuestion]: selectedOption,
       });
 
-      if (currentQuestion < questions?.data.length - 1) {
+      if (currentQuestion < questions.data.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
-        setSelectedOption(selectedAnswers[currentQuestion + 1] || '');
+        setSelectedOption(selectedAnswers[currentQuestion + 1] || "");
       } else {
-        navigate('/results', {
+        navigate("/results", {
           state: {
             answers: { ...selectedAnswers, [currentQuestion]: selectedOption },
-            totalQuestions: questions?.data.length,
+            totalQuestions: questions.data.length,
           },
         });
       }
     }
   };
 
+  return (
+    <TalkBox isDarkMode={isDarkMode}>
+      {/* Progress Header */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 4,
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <AccessTime color="success" />
+          <Typography>
+            Question {currentQuestion + 1} of {questions.data.length}
+          </Typography>
+        </Box>
+        <Typography color="success.main" fontWeight={600}>
+          {Math.round(((currentQuestion + 1) / questions.data.length) * 100)}%
+        </Typography>
+      </Box>
 
+      {/* QUESTION */}
+      <Box sx={{ mb: 2 }}>
+        <Typography
+          variant="h5"
+          align="center"
+          fontWeight={600}
+          color="text.primary"
+          sx={{
+            fontSize: {
+              xs: "1.1rem", // mobile
+              sm: "1.3rem", // tablet
+              md: "1.5rem", // desktop
+            },
+          }}
+        >
+          {questions.data[currentQuestion]?.question}
+        </Typography>
+      </Box>
 
-  const progress = ((currentQuestion + 1) / questions.data.length) * 100;
-
-  const renderOptions = () => {
-    return (
-      <FormControl component="fieldset" fullWidth sx={{ mb: 4 }}>
-        <RadioGroup value={selectedOption} onChange={handleOptionChange}>
-          {[questions?.data?.[currentQuestion]?.optA, questions?.data?.[currentQuestion]?.optB, questions?.data?.[currentQuestion]?.optC, questions?.data?.[currentQuestion]?.optD].map((option, index) => (
-            <Paper
-              key={index}
-              elevation={selectedOption === option ? 2 : 0}
-              sx={{
-                mb: 2,
-                p: 2,
-                border: 2,
-                borderColor: selectedOption === option ? 'success.main' : 'divider',
-                bgcolor: selectedOption === option ? 'action.hover' : 'transparent',
-                transition: 'all 0.2s',
-                '&:hover': {
-                  borderColor: 'success.main',
-                  bgcolor: 'action.hover',
-                },
-              }}
-            >
+      {/* OPTIONS */}
+      <FormControl fullWidth sx={{ mb: 4 }}>
+        <RadioGroup
+          value={selectedOption}
+          onChange={(e) => setSelectedOption(e.target.value)}
+        >
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr", // mobile → 1 per row
+                sm: "1fr 1fr", // tablet & up → 2 per row
+              },
+              gap: 2,
+            }}
+          >
+            {[
+              questions?.data?.[currentQuestion]?.optA,
+              questions?.data?.[currentQuestion]?.optB,
+              questions?.data?.[currentQuestion]?.optC,
+              questions?.data?.[currentQuestion]?.optD,
+            ].map((option, index) => (
               <FormControlLabel
+                key={index}
                 value={option}
                 control={
                   <Radio
                     sx={{
-                      color: 'text.secondary',
-                      '&.Mui-checked': {
-                        color: 'success.main',
+                      alignSelf: "center", // ✅ vertical center
+                      "&.Mui-checked": {
+                        color: "success.main",
                       },
                     }}
                   />
                 }
-                label={option}
-                sx={{ width: '100%', m: 0 }}
+                label={
+                  <Typography
+                    fontWeight={600}
+                    color="text.primary"
+                    sx={{
+                      fontSize: {
+                        xs: "0.95rem", // mobile
+                        sm: "1.05rem", // tablet
+                        md: "1.2rem", // desktop
+                      },
+                      lineHeight: 1.4,
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    {option}
+                  </Typography>
+                }
+                sx={{
+                  m: 0,
+                  p: 1.5,
+                  display: "flex",
+                  alignItems: "center", // ✅ centers radio + text together
+                  borderRadius: 1,
+                  "&:hover": {
+                    bgcolor: "action.hover",
+                  },
+                }}
               />
-            </Paper>
-          ))}
+            ))}
+          </Box>
         </RadioGroup>
       </FormControl>
-    )
-  }
 
-  return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        bgcolor: 'background.default',
-        py: 4,
-        px: 2,
-      }}
-    >
-      <Container maxWidth="md">
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-          <IconButton onClick={toggleTheme} color="inherit">
-            {isDarkMode ? <Brightness7 /> : <Brightness4 />}
-          </IconButton>
-        </Box>
-
-        {/* Progress Header */}
-        <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <AccessTime color="success" />
-              <Typography color="text.primary">
-                Question {currentQuestion + 1} of {questions?.data.length}
-              </Typography>
-            </Box>
-            <Typography color="success.main" fontWeight="600">
-              {Math.round(progress)}%
-            </Typography>
-          </Box>
-
-          <LinearProgress
-            variant="determinate"
-            value={progress}
-            sx={{
-              height: 8,
-              borderRadius: 1,
-              bgcolor: 'action.hover',
-              '& .MuiLinearProgress-bar': {
-                bgcolor: 'success.main',
-              },
-            }}
-          />
-        </Paper>
-
-        {/* Question Card */}
-        <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
-          <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
-            {questions?.data?.[currentQuestion]?.question}
-          </Typography>
-
-
-          {renderOptions()}
-
-
-          <Button
-            fullWidth
-            variant="contained"
-            size="large"
-            onClick={handleNext}
-            disabled={!selectedOption}
-            endIcon={<ChevronRight />}
-            sx={{
-              py: 1.5,
-              bgcolor: 'success.main',
-              color: 'primary.contrastText',
-              '&:hover': {
-                bgcolor: 'success.dark',
-              },
-              '&.Mui-disabled': {
-                bgcolor: 'action.disabledBackground',
-                color: 'action.disabled',
-              },
-            }}
-          >
-            {currentQuestion < questions?.data.length - 1 ? 'Next Question' : 'Submit Exam'}
-          </Button>
-        </Paper>
-      </Container>
-    </Box>
+      {/* NEXT BUTTON */}
+      <Button
+        fullWidth
+        variant="contained"
+        size="large"
+        onClick={handleNext}
+        disabled={!selectedOption}
+        endIcon={<ChevronRight />}
+        sx={{
+          width:'40%',
+          py: 1.5,
+          bgcolor: "success.main",
+          "&:hover": {
+            bgcolor: "success.dark",
+          },
+        }}
+      >
+        {currentQuestion < questions.data.length - 1
+          ? "Next Question"
+          : "Submit Exam"}
+      </Button>
+    </TalkBox>
   );
 }

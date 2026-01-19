@@ -48,7 +48,7 @@ export default function Results() {
     <Box
       sx={{
         minHeight: '100vh',
-        bgcolor: 'background.default',
+        // bgcolor: 'background.default',
         py: 4,
         px: 2,
       }}
