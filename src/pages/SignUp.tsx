@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Container,
@@ -14,9 +15,11 @@ import {
 } from '@mui/material';
 import { PersonAdd, Brightness4, Brightness7 } from '@mui/icons-material';
 import { useThemeContext } from '../ThemeContext';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { isDarkMode, toggleTheme } = useThemeContext();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -27,7 +30,7 @@ export default function SignUp() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setError('Passwords do not match!');
+      setError(t('common.passwordsDoNotMatch'));
       return;
     }
     setError('');
@@ -53,7 +56,8 @@ export default function SignUp() {
             borderRadius: 2,
           }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <LanguageSwitcher />
             <IconButton onClick={toggleTheme} color="inherit">
               {isDarkMode ? <Brightness7 /> : <Brightness4 />}
             </IconButton>
@@ -66,10 +70,10 @@ export default function SignUp() {
           </Box>
 
           <Typography variant="h4" align="center" gutterBottom>
-            Create Account
+            {t('common.createAccount')}
           </Typography>
           <Typography variant="body1" align="center" color="text.secondary" sx={{ mb: 4 }}>
-            Sign up to start your exam
+            {t('common.signUpToContinue')}
           </Typography>
 
           {error && (
@@ -81,7 +85,7 @@ export default function SignUp() {
           <form onSubmit={handleSubmit}>
             <TextField
               fullWidth
-              label="Full Name"
+              label={t('common.fullName')}
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -92,7 +96,7 @@ export default function SignUp() {
 
             <TextField
               fullWidth
-              label="Email"
+              label={t('common.email')}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -103,7 +107,7 @@ export default function SignUp() {
 
             <TextField
               fullWidth
-              label="Password"
+              label={t('common.password')}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -114,7 +118,7 @@ export default function SignUp() {
 
             <TextField
               fullWidth
-              label="Confirm Password"
+              label={t('common.confirmPassword')}
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -138,20 +142,20 @@ export default function SignUp() {
                 },
               }}
             >
-              Sign Up
+              {t('common.signUp')}
             </Button>
           </form>
 
           <Box sx={{ mt: 3, textAlign: 'center' }}>
             <Typography variant="body2" color="text.secondary">
-              Already have an account?{' '}
+              {t('common.haveAccount')}{' '}
               <Link
                 component={RouterLink}
                 to="/signin"
                 color="text.secondary"
                 sx={{ fontWeight: 600 }}
               >
-                Sign In
+                {t('common.signIn')}
               </Link>
             </Typography>
           </Box>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Container,
@@ -16,10 +17,12 @@ import {
 import { ChevronRight, AccessTime, Brightness4, Brightness7 } from '@mui/icons-material';
 import { useThemeContext } from '../ThemeContext';
 import { useQuestions } from '../features/questions/question.hook';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 export default function Quiz() {
   const navigate = useNavigate();
   const questions = useQuestions();
+  const { t } = useTranslation();
 
   const { isDarkMode, toggleTheme } = useThemeContext();
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -125,7 +128,8 @@ export default function Quiz() {
       }}
     >
       <Container maxWidth="md">
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <LanguageSwitcher />
           <IconButton onClick={toggleTheme} color="inherit">
             {isDarkMode ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
@@ -137,7 +141,7 @@ export default function Quiz() {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <AccessTime color="success" />
               <Typography color="text.primary">
-                Question {currentQuestion + 1} of {questions?.data.length}
+                {t('common.question')} {currentQuestion + 1} {t('common.of')} {questions?.data.length}
               </Typography>
             </Box>
             <Typography color="success.main" fontWeight="600">
@@ -189,7 +193,7 @@ export default function Quiz() {
               },
             }}
           >
-            {currentQuestion < questions?.data.length - 1 ? 'Next Question' : 'Submit Exam'}
+            {currentQuestion < questions?.data.length - 1 ? t('common.next') : t('common.submit')}
           </Button>
         </Paper>
       </Container>

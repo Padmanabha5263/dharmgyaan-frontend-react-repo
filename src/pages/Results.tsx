@@ -1,5 +1,6 @@
 import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Container,
@@ -23,10 +24,12 @@ import {
   Brightness7,
 } from '@mui/icons-material';
 import { useThemeContext } from '../ThemeContext';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 export default function Results() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { isDarkMode, toggleTheme } = useThemeContext();
   const { answers, totalQuestions } = location.state || {};
 
@@ -54,7 +57,8 @@ export default function Results() {
       }}
     >
       <Container maxWidth="md">
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <LanguageSwitcher />
           <IconButton onClick={toggleTheme} color="inherit">
             {isDarkMode ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
@@ -78,12 +82,12 @@ export default function Results() {
               )}
             </Avatar>
             <Typography variant="h4" gutterBottom>
-              {passed ? 'Congratulations!' : 'Try Again'}
+              {passed ? t('common.congratulations') : t('common.tryAgain')}
             </Typography>
             <Typography variant="body1" color="text.secondary" align="center">
               {passed
-                ? 'You have successfully passed the exam'
-                : 'You need more practice to pass the exam'}
+                ? t('common.passedExam')
+                : t('common.needMorePractice')}
             </Typography>
           </Box>
 
@@ -102,7 +106,7 @@ export default function Results() {
                 {percentage}%
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                Your Score
+                {t('common.yourScore')}
               </Typography>
             </Box>
 
@@ -113,7 +117,7 @@ export default function Results() {
                     {totalQuestions}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Total Questions
+                    {t('common.totalQuestions')}
                   </Typography>
                 </Box>
               </Grid>
@@ -123,7 +127,7 @@ export default function Results() {
                     {correctAnswers}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Correct
+                    {t('common.correctAnswers')}
                   </Typography>
                 </Box>
               </Grid>
@@ -133,7 +137,7 @@ export default function Results() {
                     {totalQuestions - correctAnswers}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Incorrect
+                    {t('common.incorrect')}
                   </Typography>
                 </Box>
               </Grid>
@@ -143,7 +147,7 @@ export default function Results() {
           {/* Answer Summary */}
           <Box sx={{ mb: 4 }}>
             <Typography variant="h6" gutterBottom>
-              Answer Summary
+              {t('common.answerSummary')}
             </Typography>
             <List>
               {Object.entries(answers).map(([questionIndex, answer], index) => {
@@ -165,7 +169,7 @@ export default function Results() {
                       )}
                     </ListItemIcon>
                     <ListItemText
-                      primary={`Question ${parseInt(questionIndex) + 1}`}
+                      primary={`${t('common.question')} ${parseInt(questionIndex) + 1}`}
                       secondary={answer as string}
                     />
                     <Typography
@@ -173,7 +177,7 @@ export default function Results() {
                       color={isCorrect ? 'success.main' : 'error.main'}
                       fontWeight="600"
                     >
-                      {isCorrect ? 'Correct' : 'Incorrect'}
+                      {isCorrect ? t('common.correct') : t('common.incorrect')}
                     </Typography>
                   </ListItem>
                 );
@@ -198,7 +202,7 @@ export default function Results() {
                   },
                 }}
               >
-                Try Again
+                {t('common.retakeQuiz')}
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -219,7 +223,7 @@ export default function Results() {
                   },
                 }}
               >
-                Go Home
+                {t('common.goHome')}
               </Button>
             </Grid>
           </Grid>

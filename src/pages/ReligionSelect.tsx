@@ -1,9 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Card, CardActionArea, CardContent, Container, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { Box, Card, CardActionArea, CardContent, Container, Typography, IconButton } from "@mui/material";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
+import { useThemeContext } from "../ThemeContext";
 import { Religion, useReligion } from "../features/religion";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 
 export default function ReligionSelect() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { isDarkMode, toggleTheme } = useThemeContext();
   const religion = useReligion({ initialLoad: true });
 
   const handleSelect = (religion: Religion) => {
@@ -23,8 +29,14 @@ export default function ReligionSelect() {
         mx: 'auto'
       }}
     >
-      <h1>Choose Your Spiritual Path</h1>
-      <p>This helps us personalize your quiz experience.</p>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <LanguageSwitcher />
+        <IconButton onClick={toggleTheme} color="inherit">
+          {isDarkMode ? <Brightness7 /> : <Brightness4 />}
+        </IconButton>
+      </Box>
+      <h1>{t('common.selectReligion')}</h1>
+      <p>{t('common.chooseReligion')}</p>
       {
         religion.data.length && religion.data.map((religion, index) => {
           return (

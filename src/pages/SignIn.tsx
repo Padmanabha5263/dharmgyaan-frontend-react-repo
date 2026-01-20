@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Container,
@@ -14,12 +15,14 @@ import {
 import { Login, Brightness4, Brightness7 } from "@mui/icons-material";
 import { useThemeContext } from "../ThemeContext";
 import { Provider, useAuth } from "../features/auth";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 
 
 
 export default function SignIn() {
   const navigate = useNavigate();
   const auth = useAuth();
+  const { t } = useTranslation();
 
   const { isDarkMode, toggleTheme } = useThemeContext();
   const [email, setEmail] = useState("");
@@ -55,7 +58,8 @@ export default function SignIn() {
             borderRadius: 2,
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+            <LanguageSwitcher />
             <IconButton onClick={toggleTheme} color="inherit">
               {isDarkMode ? <Brightness7 /> : <Brightness4 />}
             </IconButton>
@@ -68,7 +72,7 @@ export default function SignIn() {
           </Box>
 
           <Typography variant="h4" align="center" gutterBottom>
-            Welcome Back
+            {t('common.welcomeBack')}
           </Typography>
           <Typography
             variant="body1"
@@ -76,13 +80,13 @@ export default function SignIn() {
             color="text.secondary"
             sx={{ mb: 4 }}
           >
-            Sign in to continue your exam
+            {t('common.signInToContinue')}
           </Typography>
 
           <form onSubmit={handleSubmit}>
             <TextField
               fullWidth
-              label="Email"
+              label={t('common.email')}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -93,7 +97,7 @@ export default function SignIn() {
 
             <TextField
               fullWidth
-              label="Password"
+              label={t('common.password')}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -117,7 +121,7 @@ export default function SignIn() {
                 },
               }}
             >
-              Sign In
+              {t('common.signIn')}
             </Button>
           </form>
           <br />
@@ -142,20 +146,20 @@ export default function SignIn() {
               alt="Google logo"
               style={{ width: 18, height: 18, marginRight: 10 }}
             />
-            <span>Sign in with Google</span>
+            <span>{t('common.signInWithGoogle')}</span>
           </Button>
           {/* google social login end */}
 
           <Box sx={{ mt: 3, textAlign: "center" }}>
             <Typography variant="body2" color="text.secondary">
-              Don't have an account?{" "}
+              {t('common.noAccount')}{" "}
               <Link
                 component={RouterLink}
                 to="/signup"
                 color="text.secondary"
                 sx={{ fontWeight: 600 }}
               >
-                Sign Up
+                {t('common.signUp')}
               </Link>
             </Typography>
           </Box>
