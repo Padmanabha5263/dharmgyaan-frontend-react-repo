@@ -25,6 +25,7 @@ export const LanguageToggle = () => {
     { code: 'en', name: 'English', flag: '🇺🇸' },
     { code: 'hi', name: 'हिंदी', flag: '🇮🇳' },
     { code: 'kn', name: 'ಕನ್ನಡ', flag: '🇮🇳' },
+    { code: 'bn', name: 'বাংলা', flag: '🇧🇩' },
   ];
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language);
