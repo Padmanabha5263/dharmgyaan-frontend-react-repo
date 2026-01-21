@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
+import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { Language } from '@mui/icons-material';
 
-export const LanguageSwitcher = () => {
+export const LanguageToggle = () => {
   const { i18n, t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -22,25 +22,33 @@ export const LanguageSwitcher = () => {
   };
 
   const languages = [
-    { code: 'en', name: t('common.english') },
-    { code: 'hi', name: t('common.hindi') },
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'hi', name: 'हिंदी', flag: '🇮🇳' },
+    { code: 'kn', name: 'ಕನ್ನಡ', flag: '🇮🇳' },
   ];
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language)?.name || 'English';
+  const currentLanguage = languages.find(lang => lang.code === i18n.language);
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
       <Button
-        id="language-button"
+        id="language-toggle"
         aria-controls={open ? 'language-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        startIcon={<Language />}
         variant="outlined"
         size="small"
+        startIcon={<Language />}
+        sx={{
+          textTransform: 'none',
+          fontWeight: 600,
+          borderRadius: 2,
+          padding: '6px 12px',
+          minWidth: 'auto',
+        }}
       >
-        {currentLanguage}
+        {currentLanguage?.flag} {currentLanguage?.code.toUpperCase()}
       </Button>
       <Menu
         id="language-menu"
@@ -48,7 +56,7 @@ export const LanguageSwitcher = () => {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'language-button',
+          'aria-labelledby': 'language-toggle',
         }}
       >
         {languages.map((lang) => (
@@ -56,8 +64,12 @@ export const LanguageSwitcher = () => {
             key={lang.code}
             onClick={() => handleLanguageChange(lang.code)}
             selected={lang.code === i18n.language}
+            sx={{
+              fontWeight: lang.code === i18n.language ? 700 : 500,
+              backgroundColor: lang.code === i18n.language ? 'action.selected' : 'transparent',
+            }}
           >
-            {lang.name}
+            {lang.flag} {lang.name}
           </MenuItem>
         ))}
       </Menu>
@@ -65,4 +77,4 @@ export const LanguageSwitcher = () => {
   );
 };
 
-export default LanguageSwitcher;
+export default LanguageToggle;

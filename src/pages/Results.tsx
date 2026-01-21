@@ -1,5 +1,6 @@
 import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Container,
@@ -27,6 +28,7 @@ import { useThemeContext } from '../ThemeContext';
 export default function Results() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { isDarkMode, toggleTheme } = useThemeContext();
   const { answers, totalQuestions } = location.state || {};
 
@@ -78,12 +80,12 @@ export default function Results() {
               )}
             </Avatar>
             <Typography variant="h4" gutterBottom>
-              {passed ? 'Congratulations!' : 'Try Again'}
+              {passed ? t('common.congratulations') : t('common.tryAgain')}
             </Typography>
             <Typography variant="body1" color="text.secondary" align="center">
               {passed
-                ? 'You have successfully passed the exam'
-                : 'You need more practice to pass the exam'}
+                ? t('common.successMessage')
+                : t('common.practiceMessage')}
             </Typography>
           </Box>
 
@@ -102,38 +104,38 @@ export default function Results() {
                 {percentage}%
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                Your Score
+                {t('common.yourScore')}
               </Typography>
             </Box>
 
             <Grid container spacing={2}>
-              <Grid item xs={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <Box sx={{ textAlign: 'center' }}>
                   <Typography variant="h4" gutterBottom>
                     {totalQuestions}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Total Questions
+                    {t('common.totalQuestions')}
                   </Typography>
                 </Box>
               </Grid>
-              <Grid item xs={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <Box sx={{ textAlign: 'center' }}>
                   <Typography variant="h4" color="success.main" gutterBottom>
                     {correctAnswers}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Correct
+                    {t('common.correct')}
                   </Typography>
                 </Box>
               </Grid>
-              <Grid item xs={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <Box sx={{ textAlign: 'center' }}>
                   <Typography variant="h4" color="error.main" gutterBottom>
                     {totalQuestions - correctAnswers}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Incorrect
+                    {t('common.incorrect')}
                   </Typography>
                 </Box>
               </Grid>
@@ -143,7 +145,7 @@ export default function Results() {
           {/* Answer Summary */}
           <Box sx={{ mb: 4 }}>
             <Typography variant="h6" gutterBottom>
-              Answer Summary
+              {t('common.answerSummary')}
             </Typography>
             <List>
               {Object.entries(answers).map(([questionIndex, answer], index) => {
@@ -165,7 +167,7 @@ export default function Results() {
                       )}
                     </ListItemIcon>
                     <ListItemText
-                      primary={`Question ${parseInt(questionIndex) + 1}`}
+                      primary={`${t('common.question')} ${parseInt(questionIndex) + 1}`}
                       secondary={answer as string}
                     />
                     <Typography
@@ -173,7 +175,7 @@ export default function Results() {
                       color={isCorrect ? 'success.main' : 'error.main'}
                       fontWeight="600"
                     >
-                      {isCorrect ? 'Correct' : 'Incorrect'}
+                      {isCorrect ? t('common.correct') : t('common.incorrect')}
                     </Typography>
                   </ListItem>
                 );
@@ -183,7 +185,7 @@ export default function Results() {
 
           {/* Actions */}
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <Button
                 fullWidth
                 variant="contained"
@@ -198,10 +200,10 @@ export default function Results() {
                   },
                 }}
               >
-                Try Again
+                {t('common.retakeQuiz')}
               </Button>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <Button
                 fullWidth
                 variant="outlined"
@@ -219,7 +221,7 @@ export default function Results() {
                   },
                 }}
               >
-                Go Home
+                {t('common.goHome')}
               </Button>
             </Grid>
           </Grid>

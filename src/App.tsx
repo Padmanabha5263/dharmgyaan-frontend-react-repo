@@ -14,6 +14,7 @@ import { store } from "./store/store";
 import ReligionSelect from "./pages/ReligionSelect";
 import BackgroundVideo from "./components/BackgroundVideo";
 import ThemeToggle from "./components/ThemeToggle";
+import LanguageToggle from "./components/LanguageToggle";
 // import QuizCustomization from './pages/QuizCustomization';
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
         <BackgroundVideo>
           <Router>
             <ThemeToggle/>
+            <LanguageToggle/>
             <Routes>
               <Route path="/" element={<Navigate to="/signin" replace />} />
               <Route path="/signin" element={<SignIn />} />

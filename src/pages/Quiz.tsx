@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Typography,
@@ -18,6 +19,7 @@ import TalkBox from "../components/Talkbox";
 export default function Quiz() {
   const navigate = useNavigate();
   const questions = useQuestions();
+  const { t } = useTranslation();
 
   const { isDarkMode } = useThemeContext();
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -72,7 +74,7 @@ export default function Quiz() {
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <AccessTime color="success" />
           <Typography>
-            Question {currentQuestion + 1} of {questions.data.length}
+            {t('common.question')} {currentQuestion + 1} {t('common.of')} {questions.data.length}
           </Typography>
         </Box>
         <Typography color="success.main" fontWeight={600}>
@@ -185,8 +187,8 @@ export default function Quiz() {
         }}
       >
         {currentQuestion < questions.data.length - 1
-          ? "Next Question"
-          : "Submit Exam"}
+          ? t('common.next')
+          : t('common.submit')}
       </Button>
     </TalkBox>
   );

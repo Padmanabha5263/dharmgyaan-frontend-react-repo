@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Box, Typography } from "@mui/material";
 import { Religion, useReligion } from "../features/religion";
 import { useThemeContext } from "../ThemeContext";
@@ -9,6 +10,7 @@ export default function ReligionSelect() {
   const navigate = useNavigate();
   const religion = useReligion({ initialLoad: true });
   const { isDarkMode } = useThemeContext();
+  const { t } = useTranslation();
 
   const handleSelect = (religion: Religion) => {
     navigate("/quiz", { state: religion });
@@ -17,7 +19,7 @@ export default function ReligionSelect() {
   return (
     <TalkBox isDarkMode={isDarkMode}>
       <Typography variant="h4" align="center" gutterBottom>
-        Choose Your Spiritual Path
+        {t('common.chooseReligion')}
       </Typography>
 
       <Box sx={{ display: "grid", gap: 2, mt: 3 }}>
