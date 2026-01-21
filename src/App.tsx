@@ -15,7 +15,7 @@ import ReligionSelect from "./pages/ReligionSelect";
 import BackgroundVideo from "./components/BackgroundVideo";
 import ThemeToggle from "./components/ThemeToggle";
 import LanguageToggle from "./components/LanguageToggle";
-// import QuizCustomization from './pages/QuizCustomization';
+import QuizCustomization from './pages/QuizCustomization';
 
 export default function App() {
   return (
@@ -31,7 +31,7 @@ export default function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/quiz" element={<Quiz />} />
               <Route path="/results" element={<Results />} />
-              <Route path="/select-religion" element={<ReligionSelect />} />
+              <Route path="/religion" element={<ReligionSelect />} />
               <Route path="/quiz/customize" element={<QuizCustomization />} />
             </Routes>
           </Router>
