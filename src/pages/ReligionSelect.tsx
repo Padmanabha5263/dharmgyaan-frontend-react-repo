@@ -1,61 +1,42 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Card, CardActionArea, CardContent, Container, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { Box, Typography } from "@mui/material";
 import { useReligion } from "../features/religion/religion.hook";
 import { Religion } from "../features/religion/religion.type";
+import { useThemeContext } from "../ThemeContext";
+import TalkBox from "../components/Talkbox";
+import Bubble from "../components/Bubble";
 
 export default function ReligionSelect() {
   const navigate = useNavigate();
   const religion = useReligion({ initialLoad: true });
+  const { isDarkMode } = useThemeContext();
+  const { t } = useTranslation();
 
   const handleSelect = (religion: Religion) => {
     navigate("/quiz/customize", { state: religion });
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '200px',
-        display: 'grid',
-        bgcolor: 'background.default',
-        py: 2,
-        px: 2,
-        gap: 2,
-        width: { xs: '100%', sm: 400, md: 600 },
-        mx: 'auto'
-      }}
-    >
-      <h1>Choose Your Spiritual Path</h1>
-      <p>This helps us personalize your quiz experience.</p>
-      {
-        religion.data.length && religion.data.map((religion, index) => {
-          return (
-            <Card key={religion.religion_id}>
-              <CardActionArea
-                onClick={() => handleSelect(religion)}
-                data-active={true}
-                sx={{
-                  height: '100%',
-                  '&[data-active]': {
-                    backgroundColor: 'action.selected',
-                    '&:hover': {
-                      backgroundColor: 'action.selectedHover',
-                    },
-                  },
-                }}
-              >
-                <CardContent sx={{ height: '100%' }}>
-                  <Typography variant="h5" component="div">
-                    {religion.name}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {religion.description}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          );
-        })
-      }
-    </Box>
+    <TalkBox isDarkMode={isDarkMode}>
+      <Typography variant="h4" align="center" gutterBottom>
+        {t('common.chooseReligion')}
+      </Typography>
+
+      <Box sx={{ display: "grid", gap: 2, mt: 3 }}>
+        {religion.data.length > 0 &&
+          religion.data.map((item, index) => (
+            <Bubble
+              key={item.religion_id}
+              text={item.name}
+              shadow={false}
+              bubble={index % 2 === 0 ? 1 : 2}
+              isDarkMode={isDarkMode}
+              fullWidth
+              onClick={() => handleSelect(item)}
+            />
+          ))}
+      </Box>
+    </TalkBox>
   );
 }
