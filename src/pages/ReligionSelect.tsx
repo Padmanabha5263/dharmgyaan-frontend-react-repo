@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Card, CardActionArea, CardContent, Container, Typography } from "@mui/material";
-import { Religion, useReligion } from "../utils/features/religion.ts";
+import { useReligion } from "../features/religion/religion.hook";
+import { Religion } from "../features/religion/religion.type";
 
 export default function ReligionSelect() {
   const navigate = useNavigate();
   const religion = useReligion({ initialLoad: true });
 
   const handleSelect = (religion: Religion) => {
-    navigate("/quiz", { state: religion });
+    navigate("/quiz/customize", { state: religion });
   };
 
   return (
