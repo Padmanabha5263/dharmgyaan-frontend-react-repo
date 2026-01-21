@@ -1,21 +1,28 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider } from './ThemeContext';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import Quiz from './pages/Quiz';
-import Results from './pages/Results';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
-import ReligionSelect from './pages/ReligionSelect';
-import { Suspense } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { ThemeProvider } from "./ThemeContext";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import Quiz from "./pages/Quiz";
+import Results from "./pages/Results";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import ReligionSelect from "./pages/ReligionSelect";
+import BackgroundVideo from "./components/BackgroundVideo";
+import ThemeToggle from "./components/ThemeToggle";
 // import QuizCustomization from './pages/QuizCustomization';
 
 export default function App() {
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <Suspense fallback={<div>Loading...</div>}>
+        <BackgroundVideo>
           <Router>
+            <ThemeToggle/>
             <Routes>
               <Route path="/" element={<Navigate to="/signin" replace />} />
               <Route path="/signin" element={<SignIn />} />
@@ -26,7 +33,7 @@ export default function App() {
               {/* <Route path="/customize-quiz" element={<QuizCustomization />} /> */}
             </Routes>
           </Router>
-        </Suspense>
+        </BackgroundVideo>
       </ThemeProvider>
     </Provider>
   );
