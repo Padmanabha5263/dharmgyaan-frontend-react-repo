@@ -28,13 +28,13 @@ export default function SignIn() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/select-religion");
+    navigate("/religion");
   };
 
   const onGoogleSignInClick = async () => {
     await auth.login(Provider.GOOGLE);
-    navigate("/select-religion");
-  };
+    navigate("/religion");
+  }
 
   return (
     <TalkBox isDarkMode={isDarkMode}>

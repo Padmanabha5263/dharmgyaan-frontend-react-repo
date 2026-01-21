@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Box, Typography } from "@mui/material";
-import { Religion, useReligion } from "../features/religion";
+import { useReligion } from "../features/religion/religion.hook";
+import { Religion } from "../features/religion/religion.type";
 import { useThemeContext } from "../ThemeContext";
 import TalkBox from "../components/Talkbox";
 import Bubble from "../components/Bubble";
@@ -13,7 +14,7 @@ export default function ReligionSelect() {
   const { t } = useTranslation();
 
   const handleSelect = (religion: Religion) => {
-    navigate("/quiz", { state: religion });
+    navigate("/quiz/customize", { state: religion });
   };
 
   return (
