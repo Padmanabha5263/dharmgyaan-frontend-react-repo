@@ -23,12 +23,12 @@ export default function SignIn() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/religion");
+    navigate("/ReligionSelect");
   };
 
   const onGoogleSignInClick = async () => {
     await auth.login(Provider.GOOGLE);
-    navigate("/religion");
+    navigate("/ReligionSelect");
   }
 
   return (

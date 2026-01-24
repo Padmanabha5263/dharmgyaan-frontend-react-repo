@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   Box,
@@ -15,12 +15,21 @@ import { ChevronRight, AccessTime } from "@mui/icons-material";
 import { useThemeContext } from "../ThemeContext";
 import { useQuestions } from "../features/questions/question.hook";
 import TalkBox from "../components/Talkbox";
+import { useReligion } from "../features/religion/religion.hook";
+// import { useShastra } from "../features/shastra/shastra.hook";
 
 export default function Quiz() {
   const navigate = useNavigate();
   const questions = useQuestions();
   const { t } = useTranslation();
+  const religion = useReligion({ initialLoad: false });
+  // const shastra = useShastra({initialLoad: false});
+  const location = useLocation();
+  const questionCount: number = location.state.questionCount; 
+  const level: number = location.state.difficulty; 
+  const shastraId: string = location.state.shastra;
 
+ 
   const { isDarkMode } = useThemeContext();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{
@@ -28,16 +37,24 @@ export default function Quiz() {
   }>({});
   const [selectedOption, setSelectedOption] = useState<string>("");
 
+   console.log("Quiz Config from Navigation:", JSON.stringify({
+          religion_id: religion.selectedReligion?.religion_id,
+          sacred_id: shastraId,
+          level: level,
+          limit: questionCount,
+        }));
   useEffect(() => {
     (async () => {
-      await questions.loadData({
-        religion_id: "0gsLHqAZBc1dQgbToesy",
-        sacred_id: "3JHcoCBx3epx61PXFOzB",
-        level: 2,
-        limit: 10,
-      });
+      if (religion.selectedReligion && shastraId) {
+        await questions.loadData({
+          religion_id: religion.selectedReligion?.religion_id,
+          sacred_id: shastraId,
+          level: level,
+          limit: questionCount,
+        });
+      }
     })();
-  }, [questions.loadData]);
+  }, [questions.loadData, religion.selectedReligion]);
 
   const handleNext = async () => {
     if (selectedOption) {
@@ -50,7 +67,7 @@ export default function Quiz() {
         setCurrentQuestion(currentQuestion + 1);
         setSelectedOption(selectedAnswers[currentQuestion + 1] || "");
       } else {
-        navigate("/results", {
+        navigate("/Results", {
           state: {
             answers: { ...selectedAnswers, [currentQuestion]: selectedOption },
             totalQuestions: questions.data.length,

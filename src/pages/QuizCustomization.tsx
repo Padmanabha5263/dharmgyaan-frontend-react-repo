@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 
 interface FormData {
   shastra: string;
-  difficulty: string;
+  difficulty: number;
   questionCount: number;
 }
 
@@ -39,8 +39,8 @@ export default function QuizCustomization() {
   const validationRules = {
     shastra: (value: string) =>
       !value || value === "-1" ? "Please select a shastra" : null,
-    difficulty: (value: string) =>
-      !value || value === "-1" ? "Please select difficulty level" : null,
+    difficulty: (value: number) =>
+      !value || value === -1 ? "Please select difficulty level" : null,
     questionCount: (value: number) =>
       value < 5 || value === -1 ? "Please select number of questions" : null,
   };
@@ -48,7 +48,7 @@ export default function QuizCustomization() {
   const { formData, errors, handleChange, validate } = useFormData<FormData>(
     {
       shastra: "-1",
-      difficulty: "-1",
+      difficulty: -1,
       questionCount: -1,
     },
     validationRules
@@ -57,7 +57,7 @@ export default function QuizCustomization() {
   const startQuiz = () => {
     if (validate()) {
       console.log("Quiz Config:", formData);
-      navigate("/quiz");
+      navigate("/Quiz",{state: formData});
     }
   };
 
@@ -83,7 +83,7 @@ export default function QuizCustomization() {
               <MenuItem value="-1">{t("common.selectShastra")}</MenuItem>
             )}
             {data?.map((shastra: Sharstra) => (
-              <MenuItem key={shastra.id} value={shastra.id}>
+              <MenuItem key={shastra.sacred_id} value={shastra.sacred_id}>
                 {shastra.name}
               </MenuItem>
             ))}

@@ -34,7 +34,7 @@ export default function Results() {
 
   useEffect(() => {
     if (!answers || !totalQuestions) {
-      navigate('/quiz');
+      navigate('/Quiz');
     }
   }, [answers, totalQuestions, navigate]);
 
