@@ -48,7 +48,19 @@
     "practiceMessage": "परीक्षा में उत्तीर्ण होने के लिए आपको अधिक अभ्यास की आवश्यकता है",
     "answerSummary": "उत्तर सारांश",
     "correct": "सही",
-    "incorrect": "गलत"
+    "incorrect": "गलत",
+    "customizeQuiz": "स्वयं अपने प्रश्न तैयार करें",
+    "customizeQuizDesc": "अपनी पसंद चुनें या हमें आपको आश्चर्यचकित करने दें!",
+    "selectShastra": "शास्त्र चुनें",
+    "difficultyLevel": "कठिनाई स्तर",
+    "selectDifficulty": "कठिनाई चुनें",
+    "easy": "आसान",
+    "medium": "मध्यम",
+    "hard": "कठिन",
+    "numberOfQuestions": "प्रश्नों की संख्या",
+    "selectQuestions": "प्रश्न चुनें",
+    "surpriseMe": "स्किप करें (हमें आपको सरप्राइज़ करने दें)",
+    "or": "या"
   }
 }
 

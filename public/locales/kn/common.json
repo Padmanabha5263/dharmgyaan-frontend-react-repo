@@ -48,6 +48,19 @@
     "practiceMessage": "ಪರೀಕ್ಷೆಯಲ್ಲಿ ಪಾಸ್ ಆಗಲು ನೀವು ಹೆಚ್ಚು ಅಭ್ಯಾಸ ಅಗತ್ಯ",
     "answerSummary": "ಉತ್ತರ ಸಾರಾಂಶ",
     "correct": "ಸರಿ",
-    "incorrect": "ತಪ್ಪು"
+    "incorrect": "ತಪ್ಪು",
+    "customizeQuiz": "ನಿಮ್ಮ ಕ್ವಿಜ್ ಅನ್ನು ಹೊಂದಿಸಿ",
+    "customizeQuizDesc": "ನಿಮ್ಮ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ ಅಥವಾ ನಮಗೆ ನಿಮ್ಮನ್ನು ಅಚ್ಚರಿ ಪಡಿಸಲು ಬಿಡಿ!",
+    "selectShastra": "ಶಾಸ್ತ್ರ ಆಯ್ಕೆಮಾಡಿ",
+    "difficultyLevel": "ಕಠಿಣತೆ ಮಟ್ಟ",
+    "selectDifficulty": "ಕಠಿಣತೆ ಆಯ್ಕೆಮಾಡಿ",
+    "easy": "ಸುಲಭ",
+    "medium": "ಮಧ್ಯಮ",
+    "hard": "ಕಠಿಣ",
+    "numberOfQuestions": "ಪ್ರಶ್ನೆಗಳ ಸಂಖ್ಯೆ",
+    "selectQuestions": "ಪ್ರಶ್ನೆಗಳು ಆಯ್ಕೆಮಾಡಿ",
+    "surpriseMe": "ಸ್ಕಿಪ್ (ನಮಗೆ ಅಚ್ಚರಿ ಮಾಡಲು ಬಿಡಿ)",
+    "or": "ಅಥವಾ"
+
   }
 }

@@ -25,7 +25,7 @@ export const lightThemeOptions: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"Josefin Sans", "Inter", "Roboto", "Helvetica", "Arial", sans-serif',
   },
 };
 
@@ -53,7 +53,7 @@ export const darkThemeOptions: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"Josefin Sans", "Inter", "Roboto", "Helvetica", "Arial", sans-serif',
   },
 };
 

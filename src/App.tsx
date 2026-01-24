@@ -13,9 +13,8 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import ReligionSelect from "./pages/ReligionSelect";
 import BackgroundVideo from "./components/BackgroundVideo";
-import ThemeToggle from "./components/ThemeToggle";
-import LanguageToggle from "./components/LanguageToggle";
 import QuizCustomization from './pages/QuizCustomization';
+import UserPreferences from "./components/UserPreferences";
 
 export default function App() {
   return (
@@ -23,8 +22,7 @@ export default function App() {
       <ThemeProvider>
         <BackgroundVideo>
           <Router>
-            <ThemeToggle/>
-            <LanguageToggle/>
+            <UserPreferences />
             <Routes>
               <Route path="/" element={<Navigate to="/signin" replace />} />
               <Route path="/signin" element={<SignIn />} />

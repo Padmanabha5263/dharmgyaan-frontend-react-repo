@@ -20,19 +20,26 @@ export default function ReligionSelect() {
   return (
     <TalkBox isDarkMode={isDarkMode}>
       <Typography variant="h4" align="center" gutterBottom>
-        {t('common.chooseReligion')}
+        {t("common.chooseReligion")}
       </Typography>
 
-      <Box sx={{ display: "grid", gap: 2, mt: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 2,
+          mt: 3,
+        }}
+      >
         {religion.data.length > 0 &&
           religion.data.map((item, index) => (
             <Bubble
               key={item.religion_id}
               text={item.name}
-              shadow={false}
+              shadow={true}
               bubble={index % 2 === 0 ? 1 : 2}
               isDarkMode={isDarkMode}
-              fullWidth
               onClick={() => handleSelect(item)}
             />
           ))}

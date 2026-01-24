@@ -1,76 +1,74 @@
-import { useTranslation } from 'react-i18next';
-import { Box, Button, Menu, MenuItem } from '@mui/material';
-import { useState } from 'react';
-import { Language } from '@mui/icons-material';
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Box, Button, Menu, MenuItem } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { useThemeContext } from "../ThemeContext";
 
-export const LanguageToggle = () => {
-  const { i18n, t } = useTranslation();
+const LanguageToggle = () => {
+  const { i18n } = useTranslation();
+  const theme = useTheme();
+  const { isDarkMode } = useThemeContext();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLanguageChange = (lang: string) => {
-    i18n.changeLanguage(lang);
-    handleClose();
-  };
 
   const languages = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'hi', name: 'हिंदी', flag: '🇮🇳' },
-    { code: 'kn', name: 'ಕನ್ನಡ', flag: '🇮🇳' },
-    { code: 'bn', name: 'বাংলা', flag: '🇧🇩' },
+    { code: "en", langName: "english", name: "English" },
+    { code: "hi", langName: "hindi", name: "हिंदी" },
+    { code: "kn", langName: "kannada", name: "ಕನ್ನಡ" },
+    { code: "bn", langName: "bangla", name: "বাংলা" },
   ];
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language);
+  const currentLanguage = languages.find((lang) => lang.code === i18n.language);
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Box>
       <Button
-        id="language-toggle"
-        aria-controls={open ? 'language-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-        variant="outlined"
+        onClick={(e) => setAnchorEl(e.currentTarget)}
         size="small"
-        startIcon={<Language />}
         sx={{
-          textTransform: 'none',
+          textTransform: "uppercase",
           fontWeight: 600,
-          borderRadius: 2,
-          padding: '6px 12px',
-          minWidth: 'auto',
+          color: theme.palette.text.primary,
+          backgroundColor: "transparent",
+          border: "none",
+          transition: "transform 0.2s ease-in",
+
+          "&:hover": {
+            transform: "scale(1.1)",
+            backgroundColor: "transparent",
+          },
         }}
       >
-        {currentLanguage?.flag} {currentLanguage?.code.toUpperCase()}
+        {currentLanguage?.langName}
       </Button>
+
       <Menu
-        id="language-menu"
         anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'language-toggle',
+        open={Boolean(anchorEl)}
+        onClose={() => setAnchorEl(null)}
+        PaperProps={{
+          sx: {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.text.primary,
+            borderRadius: 2,
+          },
         }}
       >
         {languages.map((lang) => (
           <MenuItem
             key={lang.code}
-            onClick={() => handleLanguageChange(lang.code)}
             selected={lang.code === i18n.language}
+            onClick={() => {
+              i18n.changeLanguage(lang.code);
+              setAnchorEl(null);
+            }}
             sx={{
-              fontWeight: lang.code === i18n.language ? 700 : 500,
-              backgroundColor: lang.code === i18n.language ? 'action.selected' : 'transparent',
+              "&.Mui-selected": {
+                backgroundColor: theme.palette.action.selected,
+              },
             }}
           >
-            {lang.flag} {lang.name}
+            {lang.name}
           </MenuItem>
         ))}
       </Menu>

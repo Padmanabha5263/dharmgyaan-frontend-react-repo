@@ -34,16 +34,20 @@ export default function TalkBox({ children, isDarkMode }: TalkBoxProps) {
           backgroundPosition: "center",
         }}
       >
-        
         <Box
           sx={{
             px: 4,
             py: 6,
-            width: "100%",
+            width: "85%",
           }}
         >
           {children}
         </Box>
+        <Box
+          sx={{
+            width: "15%",
+          }}
+        />
       </Container>
     </Box>
   );

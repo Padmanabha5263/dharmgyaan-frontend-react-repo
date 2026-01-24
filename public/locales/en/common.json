@@ -48,7 +48,19 @@
     "practiceMessage": "You need more practice to pass the exam",
     "answerSummary": "Answer Summary",
     "correct": "Correct",
-    "incorrect": "Incorrect"
+    "incorrect": "Incorrect",
+    "customizeQuiz": "Customize Your Quiz",
+    "customizeQuizDesc": "Choose your preferences, or skip and let us surprise you!",
+    "selectShastra": "Select Shastra",
+    "difficultyLevel": "Difficulty Level",
+    "selectDifficulty": "Select Difficulty",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "numberOfQuestions": "Number of Questions",
+    "selectQuestions": "Select Questions",
+    "surpriseMe": "Skip (Let me surprise you)",
+    "or": "OR"
   }
 }
 

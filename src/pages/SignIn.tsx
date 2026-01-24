@@ -3,18 +3,13 @@ import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   Box,
-  Container,
-  Paper,
   TextField,
   Button,
   Typography,
   Link,
-  Avatar,
-  IconButton,
 } from "@mui/material";
 import { useThemeContext } from "../ThemeContext";
 import { Provider, useAuth } from "../features/auth";
-import { getBackgroundSvg } from "../utils/hooks/getBackgroundSvg";
 import TalkBox from "../components/Talkbox";
 
 export default function SignIn() {

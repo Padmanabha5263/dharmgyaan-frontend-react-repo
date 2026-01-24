@@ -48,6 +48,18 @@
     "practiceMessage": "পরীক্ষায় উত্তীর্ণ হতে আপনার আরও অনুশীলনের প্রয়োজন",
     "answerSummary": "উত্তর সারসংক্ষেপ",
     "correct": "সঠিক",
-    "incorrect": "ভুল"
+    "incorrect": "ভুল",
+    "customizeQuiz": "আপনার কুইজ কাস্টমাইজ করুন",
+    "customizeQuizDesc": "আপনার পছন্দ বেছে নিন অথবা আমাদের আপনাকে চমকে দিতে দিন!",
+    "selectShastra": "শাস্ত্র নির্বাচন করুন",
+    "difficultyLevel": "কঠিনতার স্তর",
+    "selectDifficulty": "কঠিনতা নির্বাচন করুন",
+    "easy": "সহজ",
+    "medium": "মাঝারি",
+    "hard": "কঠিন",
+    "numberOfQuestions": "প্রশ্নের সংখ্যা",
+    "selectQuestions": "প্রশ্ন নির্বাচন করুন",
+    "surpriseMe": "স্কিপ (আমাদের চমক দিতে দিন)",
+    "or": "অথবা"
   }
 }
