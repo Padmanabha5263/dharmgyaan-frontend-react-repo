@@ -31,7 +31,7 @@ export default function SignUp() {
       return;
     }
     setError("");
-    navigate("/quiz");
+    navigate("/Quiz");
   };
 
   return (

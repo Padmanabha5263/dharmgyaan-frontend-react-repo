@@ -15,7 +15,7 @@ import { Religion } from "../features/religion/religion.type";
 
 interface FormData {
   shastra: string;
-  difficulty: string;
+  difficulty: number;
   questionCount: number;
 }
 
@@ -23,9 +23,12 @@ export default function QuizCustomization() {
   const navigate = useNavigate();
   const location = useLocation();
   const selectedReligion = location.state as Religion;
-  const questionCounts: number[] = [10, 15, 20];
-  const difficultyLevels: string[] = ["easy", "medium", "hard"];
-  
+  const questionCountsArr: number[] = [10, 15, 20];
+  const difficultyLevelsObj: { [key: string]: number } ={
+    "easy": 1,
+    "medium": 2,
+    "hard": 3
+  }  
   const { data } = useShastra({ 
     initialLoad: true, 
     religionId: selectedReligion?.religion_id || "" 
@@ -33,20 +36,20 @@ export default function QuizCustomization() {
   
   const validationRules = {
     shastra: (value: string) => !value || value === "-1" ? "Please select a shastra" : null,
-    difficulty: (value: string) => !value || value === "-1" ? "Please select difficulty level" : null,
+    difficulty: (value: number) => !value || value === -1 ? "Please select difficulty level" : null,
     questionCount: (value: number) => value < 5 || value === -1 ? "Please select number of questions" : null,
   };
   
   const { formData, errors, handleChange, validate } = useFormData<FormData>({
     shastra: "-1",
-    difficulty: "-1",
+    difficulty: -1,
     questionCount: -1,
   }, validationRules);
 
   const startQuiz = () => {
     if (validate()) {
       console.log("Quiz Config:", formData);
-      navigate("/quiz");
+      navigate("/Quiz",{state: formData});
     }
   };
 
@@ -97,7 +100,7 @@ export default function QuizCustomization() {
               {/* bind shastra data here */}
               {data && <MenuItem value="-1" >Select Shastra</MenuItem>}
               {data?.map((shastra: Sharstra) => (
-                <MenuItem key={shastra.id} value={shastra.id}>
+                <MenuItem key={shastra.sacred_id} value={shastra.sacred_id}>
                   {shastra.name}
                 </MenuItem>
               ))}
@@ -134,8 +137,8 @@ export default function QuizCustomization() {
             >
               <MenuItem value="-1">Select Difficulty</MenuItem>
               {/* bind difficulty levels here */}
-              {difficultyLevels.map((level) => (
-                <MenuItem key={level} value={level}>
+              {Object.entries(difficultyLevelsObj).map(([level, index]) => (
+                <MenuItem key={index} value={index}>
                   {level.charAt(0).toUpperCase() + level.slice(1)}
                 </MenuItem>
               ))}
@@ -172,7 +175,7 @@ export default function QuizCustomization() {
               }}
             >
               <MenuItem value={-1}>Select Questions</MenuItem>
-              {questionCounts.map((count) => (
+              {questionCountsArr.map((count) => (
                 <MenuItem key={count} value={count}>
                   {count}
                 </MenuItem>

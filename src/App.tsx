@@ -27,12 +27,12 @@ export default function App() {
             <LanguageToggle/>
             <Routes>
               <Route path="/" element={<Navigate to="/signin" replace />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/quiz" element={<Quiz />} />
-              <Route path="/results" element={<Results />} />
-              <Route path="/religion" element={<ReligionSelect />} />
-              <Route path="/quiz/customize" element={<QuizCustomization />} />
+              <Route path="/SignIn" element={<SignIn />} />
+              <Route path="/SignUp" element={<SignUp />} />
+              <Route path="/Quiz" element={<Quiz />} />
+              <Route path="/Results" element={<Results />} />
+              <Route path="/ReligionSelect" element={<ReligionSelect />} />
+              <Route path="/QuizCustomization" element={<QuizCustomization />} />
             </Routes>
           </Router>
         </BackgroundVideo>
