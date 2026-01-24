@@ -13,8 +13,9 @@ export default function ReligionSelect() {
   const { isDarkMode } = useThemeContext();
   const { t } = useTranslation();
 
-  const handleSelect = (religion: Religion) => {
-    navigate("/quiz/customize", { state: religion });
+  const handleSelect = (religionInfo: Religion) => {
+    religion.saveSelectedReligion(religionInfo);
+    navigate("/QuizCustomization", { state: religionInfo });
   };
 
   return (

@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authSlice from '../features/auth/auth.slice'
-// ...
+import religionSlice from '../features/religion/religion.slice'
+import shastraSlice from '../features/shastra/shastra.slice'
 
 export const store = configureStore({
     reducer: {
         auth: authSlice.reducer,
+        religion: religionSlice.reducer,
+        shastra: shastraSlice.reducer,
     },
 })
 
